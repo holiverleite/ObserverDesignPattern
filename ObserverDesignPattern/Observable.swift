@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension Notification.Name {
     static let networkConnection = Notification.Name("networkConnection")
@@ -59,10 +60,43 @@ class Observer: ObservableProtocol {
     @objc func receiveNotification(_ notification: Notification) {
         if let userInfo = notification.userInfo, let status = userInfo[statusKey] as? String {
             self.statusValue = status
+            self.handleNotification()
+            
+            print("Notification \(notification.name) received")
+            print("Status \(status)")
         }
     }
     
     deinit {
         self.unsubscribe()
+    }
+}
+
+class NetworkConnectionHandler: Observer {
+    var view: UIView
+    
+    init(view: UIView) {
+        self.view = view
+        super.init(statusKey: .networkStatusKey, notification: .networkConnection)
+    }
+    
+    override func handleNotification() {
+        if self.statusValue == NetworkConnectionStatus.connected.rawValue {
+            self.view.backgroundColor = UIColor.green
+        } else {
+            self.view.backgroundColor = UIColor.red
+        }
+    }
+}
+
+protocol  ObservedProtocol {
+    var statusKey : StatusKey { get }
+    var notification: Notification.Name { get }
+    func notifyObservers(about changeTo: String)
+}
+
+extension ObservedProtocol {
+    func notifyObservers(about changeTo: String) {
+        NotificationCenter.default.post(name: notification, object: self, userInfo: [statusKey.rawValue : changeTo])
     }
 }

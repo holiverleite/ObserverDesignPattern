@@ -57,12 +57,12 @@
 			isa = PBXGroup;
 			children = (
 				94F81B0E232959DD00B1BD86 /* AppDelegate.swift */,
+				94F81B2023295B6B00B1BD86 /* Observable.swift */,
 				94F81B10232959DD00B1BD86 /* ViewController.swift */,
 				94F81B12232959DD00B1BD86 /* Main.storyboard */,
 				94F81B15232959E000B1BD86 /* Assets.xcassets */,
 				94F81B17232959E000B1BD86 /* LaunchScreen.storyboard */,
 				94F81B1A232959E000B1BD86 /* Info.plist */,
-				94F81B2023295B6B00B1BD86 /* Observable.swift */,
 			);
 			path = ObserverDesignPattern;
 			sourceTree = "<group>";
